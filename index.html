@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mae Luxe SPA — Your Oasis of Calm Beauty & Indulgence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-light: #e8c96b;
+            --sage: #7d8e7d;
+            --sage-dark: #5a6b5a;
+            --cream: #faf7f2;
+            --ivory: #f5f0e8;
+            --blush: #e6d5cf;
+            --charcoal: #1a1a1a;
+            --soft-black: #2d2d2d;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--cream);
+            color: var(--charcoal);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            background: var(--charcoal);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 1s ease, visibility 1s;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .preloader-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            letter-spacing: 0.2em;
+            animation: shimmer 2s infinite;
+        }
+
+        .preloader-logo span {
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .preloader-line {
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin-top: 1.5rem;
+            animation: expand 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes expand {
+            0% { transform: scaleX(0); opacity: 0; }
+            50% { transform: scaleX(1); opacity: 1; }
+            100% { transform: scaleX(0); opacity: 0; }
+        }
+
+        /* Audio Toggle */
+        .audio-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .audio-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .audio-toggle svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--gold);
+        }
+
+        .audio-toggle.muted svg {
+            opacity: 0.5;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1.2rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 0.8rem 3rem;
+            box-shadow: 0 2px 30px rgba(0,0,0,0.1);
+        }
+
+        .brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        .brand span {
+            color: var(--gold);
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        nav.scrolled .brand {
+            color: var(--white);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 400;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 1px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .book-btn {
+            padding: 0.7rem 1.8rem;
+            background: var(--gold);
+            color: var(--charcoal) !important;
+            border-radius: 30px;
+            font-weight: 500 !important;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn::after {
+            display: none !important;
+        }
+
+        .book-btn:hover {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 1.5px;
+            background: var(--white);
+            transition: all 0.3s;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            position: fixed;
+            inset: 0;
+            background: var(--charcoal);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            z-index: 999;
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .mobile-menu a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+        }
+
+        .mobile-menu .book-btn-mobile {
+            padding: 1rem 2.5rem;
+            background: var(--gold);
+            color: var(--charcoal);
+            border-radius: 30px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        /* Hero Slideshow */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out, transform 8s ease;
+            transform: scale(1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1.5s ease;
+        }
+
+        .hero-tag {
+            font-size: 0.8rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 2rem;
+            display: block;
+            font-weight: 300;
+        }
+
+        .hero-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.4;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+        }
+
+        .hero-slogan {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255,255,255,0.8);
+            letter-spacing: 0.1em;
+            font-weight: 300;
+            margin-bottom: 3rem;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2.5rem;
+            background: var(--gold);
+            color: var(--charcoal);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 500;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+            border: 1px solid var(--gold);
+        }
+
+        .hero-cta:hover {
+            background: transparent;
+            color: var(--gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .slide-indicators {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.8rem;
+            z-index: 3;
+        }
+
+        .indicator {
+            width: 40px;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .indicator::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .indicator.active::after {
+            width: 100%;
+            animation: progress 5s linear;
+        }
+
+        @keyframes progress {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Headers */
+        .section-header {
+            text-align: center;
+            padding: 6rem 2rem 3rem;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            display: block;
+            font-weight: 500;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            color: var(--sage-dark);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .gold-line {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 1.5rem auto;
+        }
+
+        /* Services Grid */
+        .services {
+            padding: 2rem 2rem 6rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            position: relative;
+            background: var(--white);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .service-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        .service-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .service-card:hover .service-image {
+            transform: scale(1.1);
+        }
+
+        .service-content {
+            padding: 1.8rem;
+            position: relative;
+        }
+
+        .service-number {
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            opacity: 0.2;
+            font-weight: 300;
+            line-height: 1;
+        }
+
+        .service-content h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+        }
+
+        .service-content p {
+            font-size: 0.85rem;
+            color: var(--sage-dark);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .book-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: gap 0.3s;
+        }
+
+        .book-link:hover {
+            gap: 1rem;
+        }
+
+        .book-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--charcoal) 0%, #0f0f0f 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1920&q=80') center/cover;
+            opacity: 0.1;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--white);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 3rem;
+            background: var(--gold);
+            color: var(--charcoal);
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.4s ease;
+        }
+
+        .cta-btn:hover {
+            background: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Contact Bar */
+        .contact-bar {
+            background: var(--ivory);
+            padding: 3rem 2rem;
+        }
+
+        .contact-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .contact-item {
+            padding: 1rem;
+        }
+
+        .contact-item svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .contact-item h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--charcoal);
+            font-weight: 400;
+        }
+
+        .contact-item p, .contact-item a {
+            font-size: 0.9rem;
+            color: var(--sage-dark);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 300;
+        }
+
+        .contact-item a:hover {
+            color: var(--gold);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0.3rem 1rem;
+            background: rgba(125, 142, 125, 0.1);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--sage-dark);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Footer */
+        footer {
+            background: var(--charcoal);
+            color: rgba(255,255,255,0.6);
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-brand span {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .footer-slogan {
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            html {
+                font-size: 14px;
+            }
+
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            nav.scrolled {
+                padding: 0.8rem 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero {
+                min-height: 600px;
+            }
+
+            .hero-quote {
+                font-size: 1.4rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-header {
+                padding: 4rem 1.5rem 2rem;
+            }
+
+            .audio-toggle {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-tag {
+                font-size: 0.7rem;
+                letter-spacing: 0.3em;
+            }
+
+            .hero-slogan {
+                font-size: 0.9rem;
+            }
+
+            .service-image {
+                height: 200px;
+            }
+
+            .cta-btn, .hero-cta {
+                padding: 0.9rem 2rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio Element -->
+    <audio id="spaAudio" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=relaxing-mountains-rivers-streams-running-water-18178.mp3" type="audio/mpeg">
+        <!-- Fallback: Replace above src with your own spa music file -->
+    </audio>
+
+    <!-- Audio Toggle -->
+    <div class="audio-toggle muted" id="audioToggle" title="Play Ambient Spa Music">
+        <svg id="soundOn" style="display:none" viewBox="0 0 24 24">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+        </svg>
+        <svg id="soundOff" viewBox="0 0 24 24">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+        </svg>
+    </div>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-logo">Mae <span>Luxe</span></div>
+        <div class="preloader-line"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <a href="#" class="brand">Mae <span>Luxe</span> SPA</a>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#book" class="book-btn">Book Now</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#home" onclick="closeMenu()">Home</a>
+        <a href="#services" onclick="closeMenu()">Services</a>
+        <a href="#contact" onclick="closeMenu()">Contact</a>
+        <a href="#book" class="book-btn-mobile" onclick="closeMenu()">Book Now</a>
+    </div>
+
+    <!-- Hero Slideshow -->
+    <section class="hero" id="home">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1920&q=80')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1515377905703-c4788e51bf15?auto=format&fit=crop&w=1920&q=80')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1600334089648-b0c9c5e3f37e?auto=format&fit=crop&w=1920&q=80')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1920&q=80')"></div>
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=1920&q=80')"></div>
+
+        <div class="hero-content">
+            <span class="hero-tag">Sanctuary of Serenity</span>
+            <h1 class="hero-quote">"Massage is the only form of physical pleasure to which nature forgot to attach consequences"</h1>
+            <p class="hero-slogan">Mae Luxe Spa — Your Oasis of Calm, Beauty & Indulgence</p>
+            <a href="https://wa.me/2349065682893?text=Hello%20Mae%20Luxe%20SPA,%20I%20would%20like%20to%20book%20an%20appointment" class="hero-cta" target="_blank">
+                <span>Reserve Your Escape</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+
+        <div class="slide-indicators">
+            <div class="indicator active" onclick="goToSlide(0)"></div>
+            <div class="indicator" onclick="goToSlide(1)"></div>
+            <div class="indicator" onclick="goToSlide(2)"></div>
+            <div class="indicator" onclick="goToSlide(3)"></div>
+            <div class="indicator" onclick="goToSlide(4)"></div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="section-header">
+            <span class="section-label reveal">Curated Experiences</span>
+            <h2 class="section-title reveal">Our Signature Rituals</h2>
+            <div class="gold-line reveal"></div>
+            <p class="section-subtitle reveal">Sixteen transformative treatments designed to restore, rejuvenate, and renew your body and spirit.</p>
+        </div>
+
+        <div class="services">
+            <div class="services-grid" id="servicesGrid">
+                <!-- Service cards injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="book">
+        <div class="cta-content">
+            <span class="section-label" style="color: var(--gold-light); margin-bottom: 1.5rem;">Begin Your Journey</span>
+            <h2>Your Moment of Bliss Awaits</h2>
+            <p>Step into a world where time slows down and every touch is intentional. Our therapists are ready to craft a personalized experience that speaks to your body's unique needs.</p>
+            <a href="mailto:eugeneesther86@gmail.com?subject=Booking%20Request%20-%20Mae%20Luxe%20SPA" class="cta-btn">
+                <span>Book Your Session</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Contact Bar -->
+    <section class="contact-bar" id="contact">
+        <div class="contact-grid">
+            <div class="contact-item reveal">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <h4>Email Us</h4>
+                <a href="mailto:eugeneesther86@gmail.com">eugeneesther86@gmail.com</a>
+            </div>
+            <div class="contact-item reveal">
+                <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                <h4>WhatsApp</h4>
+                <a href="https://wa.me/2349065682893" target="_blank">+234 906 568 2893</a>
+            </div>
+            <div class="contact-item reveal">
+                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <h4>Visit Us</h4>
+                <p>Lekki, Lagos, Nigeria</p>
+            </div>
+            <div class="contact-item reveal">
+                <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/></svg>
+                <h4>Hours</h4>
+                <div class="status-badge">
+                    <span class="status-dot"></span>
+                    <span>Open 24/7</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-brand">Mae <span>Luxe</span> SPA</div>
+        <p class="footer-slogan">Your Oasis of Calm, Beauty & Indulgence</p>
+        <div class="footer-links">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#book">Book Now</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Mae Luxe SPA. All rights reserved. Lekki, Lagos.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 2000);
+        });
+
+        // Audio Toggle
+        const audio = document.getElementById('spaAudio');
+        const audioToggle = document.getElementById('audioToggle');
+        const soundOn = document.getElementById('soundOn');
+        const soundOff = document.getElementById('soundOff');
+        let isPlaying = false;
+
+        audioToggle.addEventListener('click', async () => {
+            if (!isPlaying) {
+                try {
+                    await audio.play();
+                    isPlaying = true;
+                    audioToggle.classList.remove('muted');
+                    soundOn.style.display = 'block';
+                    soundOff.style.display = 'none';
+                } catch (e) {
+                    console.log('Audio playback requires user interaction');
+                }
+            } else {
+                audio.pause();
+                isPlaying = false;
+                audioToggle.classList.add('muted');
+                soundOn.style.display = 'none';
+                soundOff.style.display = 'block';
+            }
+        });
+
+        // Navbar Scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Mobile Menu
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobileMenu');
+        let menuOpen = false;
+
+        hamburger.addEventListener('click', () => {
+            menuOpen = !menuOpen;
+            mobileMenu.classList.toggle('open', menuOpen);
+            const spans = hamburger.querySelectorAll('span');
+            if (menuOpen) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+            } else {
+                spans[0].style.transform = '';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = '';
+            }
+        });
+
+        function closeMenu() {
+            menuOpen = false;
+            mobileMenu.classList.remove('open');
+            const spans = hamburger.querySelectorAll('span');
+            spans[0].style.transform = '';
+            spans[1].style.opacity = '1';
+            spans[2].style.transform = '';
+        }
+
+        // Hero Slideshow
+        const slides = document.querySelectorAll('.slide');
+        const indicators = document.querySelectorAll('.indicator');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            indicators[currentSlide].classList.remove('active');
+            
+            currentSlide = index;
+            if (currentSlide >= slides.length) currentSlide = 0;
+            
+            slides[currentSlide].classList.add('active');
+            indicators[currentSlide].classList.add('active');
+            
+            clearInterval(slideInterval);
+            slideInterval = setInterval(nextSlide, 5000);
+        }
+
+        function nextSlide() {
+            goToSlide((currentSlide + 1) % slides.length);
+        }
+
+        slideInterval = setInterval(nextSlide, 5000);
+
+        // Services Data
+        const services = [
+            { name: "Swedish Massage", img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80", desc: "A gentle, flowing massage using long strokes to improve circulation and ease muscle tension." },
+            { name: "Foot Massage", img: "https://images.unsplash.com/photo-1515377905703-c4788e51bf15?auto=format&fit=crop&w=600&q=80", desc: "Reflexology-inspired therapy targeting pressure points to restore balance and deep relaxation." },
+            { name: "Deep Tissue Massage", img: "https://images.unsplash.com/photo-1600334089648-b0c9c5e3f37e?auto=format&fit=crop&w=600&q=80", desc: "Intensive pressure techniques targeting chronic knots and deep muscle layers for lasting relief." },
+            { name: "Body Exfoliations", img: "https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=600&q=80", desc: "Luxurious scrub ritual that buffs away dead skin, revealing silky smooth and radiant skin." },
+            { name: "Aromatherapy Massage", img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80", desc: "Essential oil-infused therapy combining scent and touch for holistic emotional healing." },
+            { name: "Manicure", img: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=600&q=80", desc: "Nail shaping, cuticle care, and polish in a soothing hand massage experience." },
+            { name: "Tantric Massage", img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=600&q=80", desc: "A mindful, energy-awakening ritual that harmonizes the body's natural flow and awareness." },
+            { name: "Pedicure", img: "https://images.unsplash.com/photo-1515377905703-c4788e51bf15?auto=format&fit=crop&w=600&q=80", desc: "Complete foot renewal with soak, scrub, nail care, and relaxing massage." },
+            { name: "Lingam Massage", img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80", desc: "Sacred wellness therapy honoring masculine energy through conscious, therapeutic touch." },
+            { name: "Erotic Massage", img: "https://images.unsplash.com/photo-1600334089648-b0c9c5e3f37e?auto=format&fit=crop&w=600&q=80", desc: "Sensual full-body experience designed to awaken pleasure, connection, and deep release." },
+            { name: "Nuru Massage", img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80", desc: "Japanese-inspired body-to-body gel massage for unparalleled skin-on-skin sensation." },
+            { name: "Couples Swedish Massage", img: "https://images.unsplash.com/photo-1515377905703-c4788e51bf15?auto=format&fit=crop&w=600&q=80", desc: "Side-by-side Swedish massage in a private suite for shared tranquility and bonding." },
+            { name: "Four Hand Swedish Massage", img: "https://images.unsplash.com/photo-1600334089648-b0c9c5e3f37e?auto=format&fit=crop&w=600&q=80", desc: "Two therapists working in synchronized harmony for an immersive, doubled relaxation effect." },
+            { name: "Couples Nuru Massage", img: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=600&q=80", desc: "An intimate, shared nuru experience designed for couples to explore connection together." },
+            { name: "Four Hand Nuru Massage", img: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?auto=format&fit=crop&w=600&q=80", desc: "Four-handed nuru therapy delivering overwhelming waves of synchronized sensation." },
+            { name: "Four Hand Deep Tissue Massage", img: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80", desc: "Dual-therapist deep tissue treatment for maximum muscular release and recovery." }
+        ];
+
+        // Render Services
+        const grid = document.getElementById('servicesGrid');
+        services.forEach((service, index) => {
+            const card = document.createElement('div');
+            card.className = 'service-card';
+            card.innerHTML = `
+                <div style="overflow: hidden;">
+                    <img src="${service.img}" alt="${service.name}" class="service-image" loading="lazy">
+                </div>
+                <div class="service-content">
+                    <span class="service-number">${String(index + 1).padStart(2, '0')}</span>
+                    <h3>${service.name}</h3>
+                    <p>${service.desc}</p>
+                    <a href="https://wa.me/2349065682893?text=Hello%20Mae%20Luxe%20SPA,%20I%20would%20like%20to%20book%20a%20${encodeURIComponent(service.name)}" class="book-link" target="_blank">
+                        <span>Book This Service</span>
+                        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+                    </a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Scroll Reveal
+        const revealElements = document.querySelectorAll('.reveal, .service-card');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Parallax Hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent && scrolled < window.innerHeight) {
+                heroContent.style.transform = `translateY(${scrolled * 0.4}px)`;
+                heroContent.style.opacity = 1 - (scrolled / window.innerHeight);
+            }
+        });
+    </script>
+</body>
+</html>
